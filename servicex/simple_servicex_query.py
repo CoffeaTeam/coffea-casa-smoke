@@ -1,5 +1,7 @@
 from servicex import query, dataset, deliver
-
+# we need to unset BEARER_TOKEN_FILE environment variable for now
+import os
+del os.environ['BEARER_TOKEN_FILE']
 
 spec = {
     "Sample": [
