@@ -5,7 +5,7 @@ import dask.bag
 import numpy as np
 import time
 
-NUM_TASKS = 2000  # change to control tree size
+NUM_TASKS = 64  # change to control tree size
 
 x = np.linspace(1, NUM_TASKS, NUM_TASKS)
 b = dask.bag.from_sequence(x, npartitions=len(x))
