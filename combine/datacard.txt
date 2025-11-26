@@ -1,0 +1,17 @@
+imax 1 number of bins
+jmax 1 number of processes minus 1
+kmax 1 number of nuisance parameters
+-------------------------------------------------------
+shapes signal     ch1 shape.root sig    sig_$SYSTEMATIC
+shapes background ch1 shape.root bkg    bkg_$SYSTEMATIC
+shapes data_obs   ch1 shape.root dat
+-------------------------------------------------------
+bin            ch1 
+observation     -1  
+-------------------------------------------------------
+bin               ch1        ch1 
+process        signal background
+process             0          1   
+rate               -1         -1  
+-------------------------------------------------------
+QCDscale   shape    -          1
