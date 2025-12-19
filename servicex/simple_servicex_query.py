@@ -1,3 +1,4 @@
+from servicex import ProgressBarFormat
 from servicex import query, dataset, deliver
 # we need to unset BEARER_TOKEN_FILE environment variable for now
 import os
@@ -25,4 +26,5 @@ spec = {
     ]
 }
 
-print(f"Files: {deliver(spec)}")
+# we need to remove progress bar because it is breaking ServiceX execution on coffea-casa
+print(f"Files: {deliver(spec, progress_bar=ProgressBarFormat.none)}")
