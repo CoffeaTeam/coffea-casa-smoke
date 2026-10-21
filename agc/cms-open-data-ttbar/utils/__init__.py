@@ -7,7 +7,6 @@ import hist
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import uproot
-from servicex import ServiceXDataset
 import numpy as np
 
 def get_client(af="coffea_casa"):
@@ -132,6 +131,8 @@ def save_histograms(all_histograms, fileset, filename):
 
 class ServiceXDatasetGroup():
     def __init__(self, fileset, backend_name="uproot", ignore_cache=False):
+        from servicex import ServiceXDataset  # ServiceX v2 API; only imported when USE_SERVICEX=True
+
         self.fileset = fileset
 
         # create list of files (& associated processes)
