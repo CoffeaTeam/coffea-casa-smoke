@@ -77,14 +77,14 @@ def create_connection():
  
  
 # This tutorial uses RDataframe with Dask, to configure a Dask connection and fill two histograms distributedly. 
-# Original code is here: https://root.cern/doc/v632/distrdf002__dask__connection_8py.html
+# Original code is here: https://root.cern/doc/v636/distrdf002__dask__connection_8py.html
 
 if __name__ == "__main__":
  
     # Create the connection to the mock Dask cluster on the local machine
     connection = create_connection()
     # Create an RDataFrame that will use Dask as a backend for computations
-    df = ROOT.RDF.Experimental.Distributed.Dask.RDataFrame(1000, daskclient=connection)
+    df = ROOT.RDataFrame(1000, executor=connection)
  
     # Set the random seed and define two columns of the dataset with random numbers.
     ROOT.gRandom.SetSeed(1)
