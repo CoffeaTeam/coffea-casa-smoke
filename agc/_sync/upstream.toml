@@ -2,7 +2,7 @@
 # Managed by agc/_sync/sync.py -- `ref` is rewritten by `sync.py sync --ref ...`.
 
 repo = "https://github.com/iris-hep/analysis-grand-challenge.git"
-ref = "42a095692d6db879b862e6a78d0cce50c8c47c0c"
+ref = "ccb2751824e9bd67cc2ef1888f87655db53cd281"
 
 # Per analysis:
 #   src     directory in the upstream repo
