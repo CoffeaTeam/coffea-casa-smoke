@@ -1,0 +1,34 @@
+# Files synced from iris-hep/analysis-grand-challenge.
+# Managed by agc/_sync/sync.py -- `ref` is rewritten by `sync.py sync --ref ...`.
+
+repo = "https://github.com/iris-hep/analysis-grand-challenge.git"
+ref = "42a095692d6db879b862e6a78d0cce50c8c47c0c"
+
+# Per analysis:
+#   src     directory in the upstream repo
+#   dest    directory in this repo
+#   include globs (relative to src) of files to copy
+#   local   files in dest owned by this repo, never touched by the sync
+# Local modifications are recorded in patches/<name>.patch and 3-way merged on every sync.
+
+[analyses.cms-open-data-ttbar]
+src = "analyses/cms-open-data-ttbar"
+dest = "agc/cms-open-data-ttbar"
+include = [
+    "ttbar_analysis_pipeline.ipynb",
+    "cabinetry_config.yml",
+    "config.yaml",
+    "nanoaod_inputs.json",
+    "utils/**",
+]
+local = ["smoketest.yaml"]
+
+[analyses.atlas-open-data-hzz]
+src = "analyses/atlas-open-data-hzz"
+dest = "agc/_src/atlas-open-data-hzz"
+include = [
+    "HZZ_analysis_pipeline.ipynb",
+    "config.yml",
+    "utils/**",
+]
+local = ["smoketest.yaml"]

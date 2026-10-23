@@ -1,0 +1,53 @@
+name: Sync AGC from upstream
+
+on:
+  schedule:
+    - cron: "0 6 * * 1"  # Mondays 06:00 UTC
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: "iris-hep/analysis-grand-challenge branch, tag or commit"
+        default: main
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - id: sync
+        env:
+          REF: ${{ inputs.ref || 'main' }}
+        run: |
+          rc=0
+          python agc/_sync/sync.py sync --ref "$REF" | tee sync.log || rc=${PIPESTATUS[0]}
+          if [ "$rc" -eq 2 ]; then conflicts=true; elif [ "$rc" -eq 0 ]; then conflicts=false; else exit "$rc"; fi
+          sha=$(sed -n 's/^ref = "\([0-9a-f]*\)"$/\1/p' agc/_sync/upstream.toml)
+          {
+            echo "conflicts=$conflicts"
+            echo "sha=${sha::10}"
+            echo "log<<EOF"; cat sync.log; echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+          rm sync.log
+
+      - uses: peter-evans/create-pull-request@v7
+        with:
+          branch: agc-sync
+          title: "agc: sync with upstream ${{ steps.sync.outputs.sha }}"
+          commit-message: "agc: sync with iris-hep/analysis-grand-challenge@${{ steps.sync.outputs.sha }}"
+          draft: ${{ steps.sync.outputs.conflicts }}
+          body: |
+            Automated sync of `agc/` with [iris-hep/analysis-grand-challenge@${{ steps.sync.outputs.sha }}](https://github.com/iris-hep/analysis-grand-challenge/commit/${{ steps.sync.outputs.sha }}).
+
+            ```
+            ${{ steps.sync.outputs.log }}
+            ```
+
+            ${{ steps.sync.outputs.conflicts == 'true' && '**Conflicts**: local patches did not merge cleanly. Resolve the conflict markers on this branch, run `agc/_sync/sync.py refresh-patches`, and commit.' || 'Local patches merged cleanly.' }}
