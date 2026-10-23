@@ -17,8 +17,11 @@ dest = "agc/cms-open-data-ttbar"
 include = [
     "ttbar_analysis_pipeline.ipynb",
     "cabinetry_config.yml",
+    "cabinetry_config_ml.yml",
     "config.yaml",
+    "corrections.json",
     "nanoaod_inputs.json",
+    "models/**",
     "utils/**",
 ]
 local = ["smoketest.yaml"]

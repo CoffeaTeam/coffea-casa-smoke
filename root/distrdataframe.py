@@ -84,7 +84,9 @@ if __name__ == "__main__":
     # Create the connection to the mock Dask cluster on the local machine
     connection = create_connection()
     # Create an RDataFrame that will use Dask as a backend for computations
-    df = ROOT.RDataFrame(1000, executor=connection)
+    # Pass npartitions explicitly: by default DistRDF uses the number of connected
+    # workers, which is 0 while the coffea-casa cluster is still scaling up.
+    df = ROOT.RDataFrame(1000, executor=connection, npartitions=2)
  
     # Set the random seed and define two columns of the dataset with random numbers.
     ROOT.gRandom.SetSeed(1)
