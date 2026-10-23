@@ -1,0 +1,37 @@
+diff --git a/agc/cms-open-data-ttbar/ttbar_analysis_pipeline.ipynb b/agc/cms-open-data-ttbar/ttbar_analysis_pipeline.ipynb
+index fa84d8b..7676b55 100644
+--- a/agc/cms-open-data-ttbar/ttbar_analysis_pipeline.ipynb
++++ b/agc/cms-open-data-ttbar/ttbar_analysis_pipeline.ipynb
+@@ -65,7 +65,10 @@
+     "from coffea.nanoevents import NanoAODSchema\n",
+     "\n",
+     "from func_adl import ObjectStream\n",
+-    "from func_adl_servicex import ServiceXSourceUpROOT\n",
++    "try:\n",
++    "    from func_adl_servicex import ServiceXSourceUpROOT  # ServiceX v2 only, needed when USE_SERVICEX=True\n",
++    "except ImportError:\n",
++    "    ServiceXSourceUpROOT = None\n",
+     "\n",
+     "import hist\n",
+     "import json\n",
+diff --git a/agc/cms-open-data-ttbar/utils/__init__.py b/agc/cms-open-data-ttbar/utils/__init__.py
+index b88eaa3..7a19319 100644
+--- a/agc/cms-open-data-ttbar/utils/__init__.py
++++ b/agc/cms-open-data-ttbar/utils/__init__.py
+@@ -7,7 +7,6 @@ import hist
+ import matplotlib as mpl
+ import matplotlib.pyplot as plt
+ import uproot
+-from servicex import ServiceXDataset
+ import numpy as np
+ 
+ def get_client(af="coffea_casa"):
+@@ -132,6 +131,8 @@ def save_histograms(all_histograms, fileset, filename):
+ 
+ class ServiceXDatasetGroup():
+     def __init__(self, fileset, backend_name="uproot", ignore_cache=False):
++        from servicex import ServiceXDataset  # ServiceX v2 API; only imported when USE_SERVICEX=True
++
+         self.fileset = fileset
+ 
+         # create list of files (& associated processes)
