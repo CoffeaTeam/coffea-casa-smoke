@@ -8,6 +8,7 @@ For now we support next services:
 - ROOT and Dask at scale at facility
 - CMS Combine
 - ServiceX
+- TaskVine workers on HTCondor (worker connection, worker-to-worker transfers, XCache)
 
 ## What this repository does
 Provides a small suite of fast, focused smoke tests that exercise core coffea-casa functionality (importing the package, simple analysis execution, and basic job submission/workflow checks). The tests are intended to run quickly in local and CI environments to detect regressions early.
