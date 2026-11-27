@@ -15,6 +15,13 @@ Provides a small suite of fast, focused smoke tests that exercise core coffea-ca
 
 This repository is designed to integrate easily with Kubernetes Jobs.
 
+## Profiles
+
+`profile:` in each `smoketest.yaml` is a JupyterHub profile **slug**, pinned explicitly in
+`coffea-casa-config/manifests/flatiron/cmsaf-prod/jhub-helm.yaml` (`slug:` on each `profileList` entry).
+Slugs name a role, not a version (`stable`, `latest`, `combine`, `experimental-noml`, ...), so changing a
+profile's image tag or display name doesn't require touching the tests here.
+
 ## AGC analyses
 
 `agc/` holds analyses from [iris-hep/analysis-grand-challenge](https://github.com/iris-hep/analysis-grand-challenge),
